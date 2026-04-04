@@ -1,94 +1,74 @@
-# EarnSure: Parametric Insurance for the Indian Gig Economy 🛡️
+# EarnSure: Autonomous Parametric Insurance for India's 🇮🇳 Gig Economy
 **Precision Underwriting. Zero-Touch Payouts. AI-Driven Resilience.**
 
-EarnSure is a high-fidelity insurtech platform designed to protect India's 8M+ gig workers (Zomato, Swiggy, Blinkit riders) from income volatility caused by external environmental disruptions.
+EarnSure is a high-fidelity insurtech demonstration for the **Innovation Hackathon 2026**. It solves the "income volatility" problem for 8M+ food delivery riders (Zomato, Swiggy, Blinkit) by using real-time weather telemetry and autonomous smart-contract logic.
 
 ---
 
-## 🏛️ Project Vision
-Traditional insurance fails gig workers due to long claim cycles, paperwork, and "basis risk." EarnSure solves this with **Parametric Smart Contracts**:
-- **Trigger-Based:** If the weather breaks, you get paid. Period.
-- **Zero-Touch:** No claim forms, no investigation, no waiting.
-- **Instant:** UPI-integrated payouts triggered by real-time IoT and Satellite data.
+### 🔥 The Innovation (Solving for Bharat)
+Traditional insurance fails gig workers due to long claim cycles, paperwork, and investigator visits. EarnSure replaces these with a **Digital Shield**:
+- **Triggers**: Heavy rain (>50mm), Severe AQI (>350), or Gridlock (>45m) trigger instant payouts.
+- **Parametric Protocol**: No human intervention. If the "Oracle" (Open-Meteo) matches the worker's GPS, the capital is released.
+- **SRAP Implementation**: EarnSure rewards reliability. 5-star riders get ₹750/event, while new riders start at the ₹350 base tier.
 
 ---
 
-## 🚀 Key Innovations
-
-### 1. Parametric Payout Engine (Open-Meteo Integration)
-EarnSure fetches real-time telemetry from **Open-Meteo API** and **OSM Nominatim** to cross-reference a worker's GPS location with live weather events.
-- **🌧️ Heavy Rain:** >50mm/hr precipitation triggers instant support.
-- **🌫️ Critical AQI:** >300 PM2.5 levels trigger respiratory hazard payouts.
-- **🔥 Extreme Heat:** >42°C detected triggers worker safety offsets.
-
-### 2. Star-Rating Adjusted Payouts (SRAP)
-EarnSure rewards reliability by integrating with platform delivery ratings (Zomato/Swiggy stars).
-- **5⭐ Platinum:** ₹750 max payout.
-- **3⭐ Silver:** ₹500 base payout.
-- **1⭐ Probation:** Payouts suspended until service quality improves.
-
-### 3. AI Risk Analyst (Gemini 2.0 Flash) 🧠
-The Admin Intelligence portal is powered by a **Gemini 2.0 Flash LLM**. Admins can query the "Risk Analyst" for real-time recommendations on trigger events, actuarial trends, and regional hazard depth.
-
----
-
-## 🗝️ Judge Demo Credentials
-To explore the high-fidelity portals, use these keys:
+### 🎨 High-Fidelity Experience
+We have built three distinct portals to showcase the entire ecosystem:
 
 | Portal | Role | Access Key / Phone |
 |---|---|---|
-| **Super Admin** | Control Center | `EARNSURE2026` |
-| **Partner Portal** | Zomato Admin | `ZOMATO2026` |
-| **Partner Portal** | Swiggy Admin | `SWIGGY2026` |
-| **Worker App** | Delivery Rider | Any 10-digit number (OTP is simulated) |
+| **Super Admin** | Underwriting & AI Intelligence | `EARNSURE2026` |
+| **Logistics Partner** | Zomato/Swiggy Analytics | `ZOMATO2026` |
+| **Worker App** | The Rider Dashboard | Any 10-digit number (OTP is simulated) |
 
 ---
 
-## 🛠️ Tech Stack
-- **Frontend:** React 19, Tailwind CSS (Custom "Midnight" Theme).
-- **Intelligence:** Google Gemini 2.0 Flash API.
-- **Telemetry:** Open-Meteo API (Weather), Nominatim (Geocoding).
-- **Communication:** Socket.io (Live Payout Ticker), Twilio (SMS Notifications).
-- **Persistence:** MongoDB Atlas (Cloud Database).
+### 🧠 Intelligence Layer (Gemini 2.0 Flash)
+The **Admin Intelligence Portal** is powered by Google's **Gemini 2.0 Flash LLM**. 
+- It acts as an **Actuarial Risk Analyst**, processing millions of telemetry data points to provide natural language risk recommendations.
+- Admins can query: *"What is the threat level for delivery riders in Mumbai today?"* and get an instant parametric risk assessment.
 
 ---
 
-## 📋 Standard Exclusions (Compliance)
-As a production-grade prototype, EarnSure adheres to standard IRDAI Sandbox exclusions:
-- Fraudulent GPS spoofing or location tampering.
-- Illegal activities or substance abuse during shifts.
-- Government-mandated lockdowns not tied to weather triggers.
-- Intentional self-harm or vehicle neglect.
+### 🛠️ Tech Stack & Service Grid
+- **Frontend**: React 19, Tailwind CSS (Custom "Midnight" Premium Theme).
+- **Intelligence**: Gemini 2.0 Flash LLM API.
+- **Telemetry Oracles**: Open-Meteo API (Weather), OSM Nominatim (Geocoding).
+- **Real-Time Data**: Socket.io (Live Payout Tickers & Telemetry Streams).
+- **Communication**: Twilio SMS (Mocked for Demo).
+- **Database**: MongoDB Atlas (Cloud Persistence).
 
 ---
 
-## 🏗️ Setup & Installation
+### 🏗️ Setup & Installation
 
-1. **Install Dependencies:**
+1. **Install Gear:**
    ```bash
    npm install
    ```
-
-2. **Environment Variables:**
-   Create a `.env` in the root and add:
+2. **Environment Configuration:**
+   Create a `.env` in the root (and in `/backend`) with:
    ```env
-   VITE_GEMINI_API_KEY=your_key_here
-   MONGODB_URI=your_atlas_uri
+   VITE_GEMINI_API_KEY=AIzaSyCNJPv_...
+   MONGODB_URI=mongodb+srv://...
    ```
-
-3. **Run Dev Server:**
+3. **Launch Engine:**
    ```bash
    npm run dev
    ```
 
-4. **Production Build:**
-   ```bash
-   npm run build
-   ```
+---
+
+### 📋 Standard Exclusions (Compliance)
+EarnSure adheres to **IRDAI Sandbox** and **DPDP Act 2023** standards:
+- Fraudulent GPS spoofing or location tampering is automatically detected.
+- Payouts are restricted to active shift hours verified by Platform Partners.
+- Payouts are suspended for riders with < 2.0 rating (Probation).
 
 ---
 
-## 🗺️ System Architecture
+### 🗺️ System Architecture
 
 ```mermaid
 graph TD
@@ -102,4 +82,4 @@ graph TD
 
 ---
 **Submission for: Innovation Hackathon 2026**
-*Transforming the safety net for the backbone of India's logistics economy.*
+*Protecting the backbone of India's logistics economy.*
