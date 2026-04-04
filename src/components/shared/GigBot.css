@@ -1,0 +1,172 @@
+.gigbot-wrapper {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+}
+
+.gigbot-toggle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-rose));
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255, 69, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+}
+
+.gigbot-toggle:hover {
+  transform: scale(1.1);
+}
+
+.gigbot-toggle .blob {
+  font-size: 1.5rem;
+}
+
+.wobble {
+  animation: wobble 3s ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.gigbot-window {
+  width: 340px;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-accent);
+  background: rgba(10, 10, 10, 0.95);
+  animation: scaleIn 0.3s var(--ease-out);
+}
+
+.gigbot-header {
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gigbot-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gigbot-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+}
+
+.gigbot-header h4 {
+  font-weight: 800;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.gigbot-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.gigbot-messages {
+  flex: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gigmessage-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.bot-row { justify-content: flex-start; }
+.user-row { justify-content: flex-end; }
+
+.bot-avatar {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.gigmessage {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  max-width: 85%;
+}
+
+.message-bot {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  border-bottom-left-radius: 0;
+}
+
+.message-user {
+  background: var(--accent-orange);
+  color: #fff;
+  border-bottom-right-radius: 0;
+}
+
+.gigbot-input-area {
+  padding: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.gigbot-input-area input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.gigbot-input-area input:focus {
+  border-color: var(--accent-orange);
+}
+
+.btn-send {
+  background: var(--accent-cyan);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: transform 0.2s;
+}
+
+.btn-send:hover {
+  transform: scale(1.1);
+}
