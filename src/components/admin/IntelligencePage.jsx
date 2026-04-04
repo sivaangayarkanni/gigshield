@@ -18,7 +18,7 @@ const IntelligencePage = () => {
     setAiLoading(true);
 
     const context = `Current sensor data: AQI=${sensorData.aqi}, Rain=${sensorData.rainfall}mm, Temp=${sensorData.temperature}°C, Traffic=${sensorData.trafficLatency}x, City=${activeCity}, RealWeather=${realWeatherMode}`;
-    const prompt = `You are a parametric insurance risk analyst for GigShield India. ${context}. Admin asks: ${userMsg}. Give a direct, concise risk recommendation in 2-3 sentences. Use ₹ for currency. Focus on whether payout should be triggered.`;
+    const prompt = `You are a parametric insurance risk analyst for EarnSure India. ${context}. Admin asks: ${userMsg}. Give a direct, concise risk recommendation in 2-3 sentences. Use ₹ for currency. Focus on whether payout should be triggered.`;
 
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     if (apiKey && apiKey !== 'YOUR_API_KEY_HERE') {

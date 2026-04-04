@@ -50,7 +50,7 @@ const WorkerDashboard = () => {
           <div className="policy-card">
             <div className="policy-header">
               <div className="policy-brand">
-                <span className="logo-text">GigShield</span>
+                <span className="logo-text">EarnSure</span>
                 <span className="policy-status">Active Cover</span>
               </div>
               <div className={`status-indicator ${workerState.policyActive ? 'active' : 'inactive'}`}>
@@ -119,7 +119,7 @@ const WorkerDashboard = () => {
 
           <div className="wallet-card">
             <div className="wallet-header">
-              <span className="wallet-label">GigShield Wallet</span>
+              <span className="wallet-label">EarnSure Wallet</span>
               <span className="wallet-icon">💳</span>
             </div>
             <div className="wallet-balance">

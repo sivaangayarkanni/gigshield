@@ -45,7 +45,7 @@ const GigBot = () => {
              body: JSON.stringify({
                contents: [{
                  role: 'user',
-                 parts: [{ text: `You are GigBot, an expert parametric insurance AI agent for the GigShield platform. Be extremely concise. The user says: ${input}` }]
+                 parts: [{ text: `You are EarnSureBot, an expert parametric insurance AI agent for the EarnSure platform. Be extremely concise. The user says: ${input}` }]
                }]
              })
            });
@@ -81,11 +81,11 @@ const GigBot = () => {
           if (lowerInput.length < 5) botReply = "Please provide more details. I am listening.";
           else botReply = "As an autonomous agent, I am continually scanning the telemetry grid. While I don't perfectly understand that command, I guarantee if a weather anomaly triggers in your exact GPS zone, you get paid automatically.";
         } else {
-          if (topIntent === 'claim') botReply = "GigShield's parametric protocol removes the need for human claims. The moment a registered disruption occurs at your live GPS tag, 100% of the capital is instantly released via UPI.";
+          if (topIntent === 'claim') botReply = "EarnSure's parametric protocol removes the need for human claims. The moment a registered disruption occurs at your live GPS tag, 100% of the capital is instantly released via UPI.";
           else if (topIntent === 'weather') botReply = `My local sensor nodes near your position (${currentEventState?.city || 'your zone'}) are active. We look for AQI > 300, Rain > 50mm, or extreme temperature barriers to execute smart-contract payouts.`;
           else if (topIntent === 'bank') botReply = "I directly interface with your linked bank. Right now, your configured vector is STATE BANK OF INDIA (XXXX-1234). The current wallet balance is instantly withdrawable.";
           else if (topIntent === 'technical') botReply = "I operate as a high-frequency logic agent. I cross-reference weather API data against your real-time node position. If parameters match, I bypass human review completely.";
-          else if (topIntent === 'greeting') botReply = "Hello! I am GigBot, your autonomous logic engine. I continuously watch the Indian cloud/weather vectors to protect your earnings. What do you need?";
+          else if (topIntent === 'greeting') botReply = "Hello! I am EarnSureBot, your autonomous logic engine. I continuously watch the Indian cloud/weather vectors to protect your earnings. What do you need?";
         }
       }
       setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
@@ -105,7 +105,7 @@ const GigBot = () => {
           <div className="gigbot-header">
             <div className="gigbot-title">
               <span className="gigbot-status-dot pulse"></span>
-              <h4>GigBot <span style={{fontSize:'10px', color:'var(--accent-orange)'}}>AI</span></h4>
+              <h4>EarnSureBot <span style={{fontSize:'10px', color:'var(--accent-orange)'}}>AI</span></h4>
             </div>
             <button className="gigbot-close" onClick={() => setIsOpen(false)}>×</button>
           </div>

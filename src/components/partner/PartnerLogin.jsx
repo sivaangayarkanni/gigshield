@@ -41,7 +41,7 @@ const PartnerLogin = () => {
       <div style={{ width: '100%', maxWidth: '460px' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <span style={{ fontSize: '2rem', fontWeight: 900, background: 'linear-gradient(90deg, #F97316, #06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>GigShield</span>
+          <span style={{ fontSize: '2rem', fontWeight: 900, background: 'linear-gradient(90deg, #F97316, #06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>EarnSure</span>
           <p style={{ color: '#64748B', fontSize: '13px', marginTop: '4px' }}>Partner Intelligence Portal</p>
         </div>
 

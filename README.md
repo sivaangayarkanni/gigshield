@@ -1,12 +1,12 @@
-# GigShield: Parametric Insurance for the Indian Gig Economy 🛡️
+# EarnSure: Parametric Insurance for the Indian Gig Economy 🛡️
 **Precision Underwriting. Zero-Touch Payouts. AI-Driven Resilience.**
 
-GigShield is a high-fidelity insurtech platform designed to protect India's 8M+ gig workers (Zomato, Swiggy, Blinkit riders) from income volatility caused by external environmental disruptions.
+EarnSure is a high-fidelity insurtech platform designed to protect India's 8M+ gig workers (Zomato, Swiggy, Blinkit riders) from income volatility caused by external environmental disruptions.
 
 ---
 
 ## 🏛️ Project Vision
-Traditional insurance fails gig workers due to long claim cycles, paperwork, and "basis risk." GigShield solves this with **Parametric Smart Contracts**:
+Traditional insurance fails gig workers due to long claim cycles, paperwork, and "basis risk." EarnSure solves this with **Parametric Smart Contracts**:
 - **Trigger-Based:** If the weather breaks, you get paid. Period.
 - **Zero-Touch:** No claim forms, no investigation, no waiting.
 - **Instant:** UPI-integrated payouts triggered by real-time IoT and Satellite data.
@@ -16,13 +16,13 @@ Traditional insurance fails gig workers due to long claim cycles, paperwork, and
 ## 🚀 Key Innovations
 
 ### 1. Parametric Payout Engine (Open-Meteo Integration)
-GigShield fetches real-time telemetry from **Open-Meteo API** and **OSM Nominatim** to cross-reference a worker's GPS location with live weather events.
+EarnSure fetches real-time telemetry from **Open-Meteo API** and **OSM Nominatim** to cross-reference a worker's GPS location with live weather events.
 - **🌧️ Heavy Rain:** >50mm/hr precipitation triggers instant support.
 - **🌫️ Critical AQI:** >300 PM2.5 levels trigger respiratory hazard payouts.
 - **🔥 Extreme Heat:** >42°C detected triggers worker safety offsets.
 
 ### 2. Star-Rating Adjusted Payouts (SRAP)
-GigShield rewards reliability by integrating with platform delivery ratings (Zomato/Swiggy stars).
+EarnSure rewards reliability by integrating with platform delivery ratings (Zomato/Swiggy stars).
 - **5⭐ Platinum:** ₹750 max payout.
 - **3⭐ Silver:** ₹500 base payout.
 - **1⭐ Probation:** Payouts suspended until service quality improves.
@@ -37,7 +37,7 @@ To explore the high-fidelity portals, use these keys:
 
 | Portal | Role | Access Key / Phone |
 |---|---|---|
-| **Super Admin** | Control Center | `GIGSHIELD26` |
+| **Super Admin** | Control Center | `EARNSURE2026` |
 | **Partner Portal** | Zomato Admin | `ZOMATO2026` |
 | **Partner Portal** | Swiggy Admin | `SWIGGY2026` |
 | **Worker App** | Delivery Rider | Any 10-digit number (OTP is simulated) |
@@ -54,7 +54,7 @@ To explore the high-fidelity portals, use these keys:
 ---
 
 ## 📋 Standard Exclusions (Compliance)
-As a production-grade prototype, GigShield adheres to standard IRDAI Sandbox exclusions:
+As a production-grade prototype, EarnSure adheres to standard IRDAI Sandbox exclusions:
 - Fraudulent GPS spoofing or location tampering.
 - Illegal activities or substance abuse during shifts.
 - Government-mandated lockdowns not tied to weather triggers.

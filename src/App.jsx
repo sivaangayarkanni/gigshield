@@ -86,18 +86,18 @@ import GigBot from './components/shared/GigBot';
 function App() {
   const demoUserId = "60d21b4667d0d8992e610c85";
   const [termsAccepted, setTermsAccepted] = useState(() => {
-    return sessionStorage.getItem('gigshield_terms_accepted') === 'true';
+    return sessionStorage.getItem('earnsure_terms_accepted') === 'true';
   });
   const [goToAdminLogin, setGoToAdminLogin] = useState(false);
 
   const handleAccept = () => {
-    sessionStorage.setItem('gigshield_terms_accepted', 'true');
+    sessionStorage.setItem('earnsure_terms_accepted', 'true');
     setTermsAccepted(true);
   };
 
   const handleDecline = () => {
     // Stay on terms page, don't proceed
-    alert('You must accept the Terms & Conditions to use GigShield.');
+    alert('You must accept the Terms & Conditions to use EarnSure.');
   };
 
   // Admin and Partner login pages bypass T&C (they have their own auth)

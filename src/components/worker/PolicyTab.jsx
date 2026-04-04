@@ -20,7 +20,7 @@ const PolicyTab = () => {
             
             <header className="mb-16">
                <div className="flex justify-between items-start mb-10">
-                  <h2 className="logo-text text-5xl font-black tracking-tighter">Shield v4.0</h2>
+                  <h2 className="logo-text text-5xl font-black tracking-tighter">EarnSure v4.0</h2>
                   <span className="badge success py-3 px-8 text-[11px] shadow-[0_10px_30px_rgba(52,211,153,0.2)]">VERIFIED_ACTIVE</span>
                </div>
                <p className="text-slate-500 font-bold text-sm tracking-widest uppercase leading-loose">
@@ -88,7 +88,7 @@ const PolicyTab = () => {
                <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                <h4 className="text-xs font-black mb-6 uppercase tracking-[0.3em] text-blue-400">Sustainability Disclosure</h4>
                <p className="text-[11px] text-slate-500 leading-relaxed font-bold mb-8 italic px-4">
-                  GigShield maintains a **1:1.5 Solvency Margin**. Every payout is backstopped by global reinsurance liquidity pools.
+                  EarnSure maintains a **1:1.5 Solvency Margin**. Every payout is backstopped by global reinsurance liquidity pools.
                </p>
                <button className="btn btn-outline w-full py-4 text-[10px] font-black uppercase tracking-widest shadow-xl">Full T&C Document (PDF)</button>
             </div>

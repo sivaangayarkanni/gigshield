@@ -22,7 +22,7 @@ const WorkerLayout = () => {
       <div className="rain-overlay"></div>
       <header className="worker-header">
         <div className="header-left">
-          <span className="logo-text">GigShield</span>
+          <span className="logo-text">EarnSure</span>
           <div className="header-divider"></div>
           <div className="header-location">
             <span className="location-icon">📍</span>
@@ -98,7 +98,7 @@ const WorkerLayout = () => {
           <span className="status-dot"></span>
           <span>Parametric System Active • {isOnline ? 'Online' : 'Offline Mode (Synced)'}</span>
         </div>
-        <span className="footer-copy">© 2026 GigShield • Professional Grade Protection</span>
+        <span className="footer-copy">© 2026 EarnSure • Professional Grade Protection</span>
       </footer>
     </div>
   );

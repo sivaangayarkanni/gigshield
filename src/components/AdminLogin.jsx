@@ -15,10 +15,10 @@ const AdminLogin = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (adminPassword === 'GIGSHIELD26') {
+    if (adminPassword === 'EARNSURE2026') {
       loginAdmin();
     } else {
-      alert('Invalid Credentials');
+      setError('Invalid admin key. Check the demo credentials below.');
     }
   };
 
@@ -34,7 +34,7 @@ const AdminLogin = () => {
           <p style={{ fontSize: '10px', fontWeight: 800, color: 'var(--accent-orange)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '6px' }}>🔑 Demo Credentials</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Admin Access Key:</span>
-            <code style={{ fontSize: '14px', fontWeight: 900, color: 'white', letterSpacing: '3px', background: 'rgba(255,255,255,0.06)', padding: '3px 10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }}>GIGSHIELD26</code>
+            <code style={{ fontSize: '14px', fontWeight: 900, color: 'white', letterSpacing: '3px', background: 'rgba(255,255,255,0.06)', padding: '3px 10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }}>EARNSURE2026</code>
           </div>
         </div>
         <form onSubmit={handleLogin}>

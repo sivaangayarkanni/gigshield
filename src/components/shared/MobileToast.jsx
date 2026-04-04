@@ -21,7 +21,7 @@ const MobileToast = () => {
     const handleOTP = (data) => {
       showNotification({
         title: '🔐 SecurPass OTP',
-        body: `Your GigShield Code: ${data.otp}`,
+        body: `Your EarnSure Code: ${data.otp}`,
         type: 'OTP'
       });
     };

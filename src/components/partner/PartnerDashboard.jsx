@@ -55,7 +55,7 @@ const PartnerDashboard = () => {
         padding: '1rem 2rem',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <span style={{ fontSize: '1.5rem', fontWeight: 900, background: 'linear-gradient(90deg, #F97316, #06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>GigShield</span>
+          <span style={{ fontSize: '1.5rem', fontWeight: 900, background: 'linear-gradient(90deg, #F97316, #06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>EarnSure</span>
           <div style={{ height: '24px', width: '1px', background: 'rgba(255,255,255,0.1)' }} />
           <span style={{ fontSize: '11px', fontWeight: 700, color: '#64748B', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Partner Intelligence Portal</span>
           <span style={{ fontSize: '10px', fontWeight: 800, color: '#EC4899', padding: '2px 8px', border: '1px solid #EC4899', borderRadius: '4px' }}>DEMO</span>

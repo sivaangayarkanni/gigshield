@@ -35,7 +35,7 @@ const LandingPage = () => {
       setLoading(false);
       setStep('OTP');
       addNotification(
-        "GigShield Secure Access",
+        "EarnSure Secure Access",
         `Your verification code is ${simulatedOtp}. Valid for 5 mins.`,
         "success"
       );
@@ -55,7 +55,7 @@ const LandingPage = () => {
     <div className="landing-root">
       <nav className={`landing-nav ${scrollY > 50 ? 'scrolled' : ''}`}>
         <div className="nav-brand">
-          <span className="logo-text">GigShield</span>
+          <span className="logo-text">EarnSure</span>
           <span style={{ marginLeft: '8px', fontSize: '10px', fontWeight: 'bold', color: 'var(--accent-magenta)', padding: '2px 6px', border: '1px solid var(--accent-magenta)', borderRadius: '4px', letterSpacing: '1px', textTransform: 'uppercase' }}>Demo</span>
           <span className="nav-tagline" style={{ marginLeft: '12px' }}>External Disruption Claims</span>
         </div>
@@ -84,7 +84,7 @@ const LandingPage = () => {
             <p style={{ margin: '0 0 4px 0', fontSize: '10px', fontWeight: 800, color: '#64748B', textTransform: 'uppercase' }}>Super Admin Portal</p>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.05)', padding: '6px 10px', borderRadius: '8px' }}>
               <span style={{ fontSize: '12px' }}>Key:</span>
-              <code style={{ fontSize: '12px', fontWeight: 900, color: '#F97316' }}>GIGSHIELD26</code>
+              <code style={{ fontSize: '12px', fontWeight: 900, color: '#F97316' }}>EARNSURE2026</code>
             </div>
           </div>
 
@@ -107,7 +107,7 @@ const LandingPage = () => {
         </div>
         
         <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: '10px', color: '#475569', textAlign: 'center' }}>
-          GIGSHIELD v4.2 • PROTOTYPE
+          EARNSURE v4.2 • PROTOTYPE
         </div>
       </div>
 
@@ -375,11 +375,11 @@ const LandingPage = () => {
           <footer className="landing-footer">
             <div className="footer-content">
               <div className="footer-brand">
-                <span className="logo-text">GigShield <span style={{fontSize:'12px', color:'var(--accent-magenta)'}}>(Demo Prototype)</span></span>
+                <span className="logo-text">EarnSure <span style={{fontSize:'12px', color:'var(--accent-magenta)'}}>(Demo Prototype)</span></span>
                 <p>IRDAI Sandbox Registered • Protecting India's Gig Workforce</p>
               </div>
               <div className="footer-legal">
-                <span>© 2026 GigShield Insurance Services</span>
+                <span>© 2026 EarnSure Insurance Services</span>
                 <span className="footer-divider">|</span>
                 <span>IRDAI License #49281</span>
               </div>

@@ -26,7 +26,7 @@ const AdminLayout = () => {
       {/* 🌑 Premium Command Sidebar */}
       <aside className="admin-sidebar shadow-2xl">
          <div className="sidebar-header p-12 px-10">
-            <h1 className="logo-text text-4xl font-black tracking-tighter">GigShield</h1>
+            <h1 className="logo-text text-4xl font-black tracking-tighter">EarnSure</h1>
             <div className="text-[10px] font-black text-slate-500 tracking-[0.3em] mt-3 uppercase opacity-50">Logistics Intelligence v4.2</div>
          </div>
 

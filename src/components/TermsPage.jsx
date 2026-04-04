@@ -48,7 +48,7 @@ const TermsPage = ({ onAccept, onDecline }) => {
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: '2rem', width: '100%', maxWidth: '800px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '0.5rem' }}>
-          <span style={{ fontSize: '1.8rem', fontWeight: 900, background: 'linear-gradient(90deg, #F97316, #06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>GigShield</span>
+          <span style={{ fontSize: '1.8rem', fontWeight: 900, background: 'linear-gradient(90deg, #F97316, #06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>EarnSure</span>
           <span style={{ fontSize: '11px', fontWeight: 800, color: '#EC4899', padding: '3px 8px', border: '1px solid #EC4899', borderRadius: '4px', letterSpacing: '1px' }}>DEMO</span>
         </div>
         <h1 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'white', marginBottom: '0.5rem' }}>Terms of Service & Privacy Policy</h1>
@@ -88,12 +88,12 @@ const TermsPage = ({ onAccept, onDecline }) => {
 
           {activeSection === 'overview' && (
             <div>
-              <h2 style={{ color: '#06B6D4', fontWeight: 800, marginBottom: '1rem', fontSize: '1.1rem' }}>About GigShield</h2>
+              <h2 style={{ color: '#06B6D4', fontWeight: 800, marginBottom: '1rem', fontSize: '1.1rem' }}>About EarnSure</h2>
               <p style={{ color: '#94A3B8', lineHeight: 1.8, marginBottom: '1rem', fontSize: '14px' }}>
-                GigShield is a parametric insurance platform designed exclusively for gig economy workers in India — including food delivery riders on Zomato, Swiggy, Blinkit, Zepto, Dunzo, Porter, and BigBasket.
+                EarnSure is a parametric insurance platform designed exclusively for gig economy workers in India — including food delivery riders on Zomato, Swiggy, Blinkit, Zepto, Dunzo, Porter, and BigBasket.
               </p>
               <p style={{ color: '#94A3B8', lineHeight: 1.8, marginBottom: '1rem', fontSize: '14px' }}>
-                Unlike traditional insurance, GigShield uses <strong style={{ color: 'white' }}>smart-contract logic</strong> to automatically release payouts when predefined weather or environmental conditions are met in your delivery zone — with zero paperwork.
+                Unlike traditional insurance, EarnSure uses <strong style={{ color: 'white' }}>smart-contract logic</strong> to automatically release payouts when predefined weather or environmental conditions are met in your delivery zone — with zero paperwork.
               </p>
               <div style={{ background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.2)', borderRadius: '12px', padding: '1rem', marginTop: '1.5rem' }}>
                 <p style={{ color: '#F97316', fontWeight: 700, fontSize: '13px', marginBottom: '0.5rem' }}>⚠️ Important: Demo Notice</p>
@@ -108,7 +108,7 @@ const TermsPage = ({ onAccept, onDecline }) => {
             <div>
               <h2 style={{ color: '#06B6D4', fontWeight: 800, marginBottom: '1rem', fontSize: '1.1rem' }}>Automatic Payout System</h2>
               <p style={{ color: '#94A3B8', lineHeight: 1.8, marginBottom: '1.5rem', fontSize: '14px' }}>
-                GigShield monitors your <strong style={{ color: 'white' }}>live GPS location</strong> and cross-references it against real-time weather and environmental data from trusted sources (Open-Meteo, IMD, IoT Sensor Grid). When disruption thresholds are breached in your exact delivery zone, payouts are automatically authorized.
+                EarnSure monitors your <strong style={{ color: 'white' }}>live GPS location</strong> and cross-references it against real-time weather and environmental data from trusted sources (Open-Meteo, IMD, IoT Sensor Grid). When disruption thresholds are breached in your exact delivery zone, payouts are automatically authorized.
               </p>
 
               <h3 style={{ color: 'white', fontWeight: 700, marginBottom: '1rem', fontSize: '14px' }}>Covered Trigger Events</h3>
@@ -141,7 +141,7 @@ const TermsPage = ({ onAccept, onDecline }) => {
             <div>
               <h2 style={{ color: '#06B6D4', fontWeight: 800, marginBottom: '0.5rem', fontSize: '1.1rem' }}>Star Rating & Payout Formula</h2>
               <p style={{ color: '#94A3B8', lineHeight: 1.8, marginBottom: '1.5rem', fontSize: '14px' }}>
-                Your payout amount is directly tied to your <strong style={{ color: 'white' }}>platform star rating</strong> as reported by your delivery platform (Zomato, Swiggy, Blinkit, etc.). GigShield retrieves this rating via authorized Platform Partner API integrations. Higher ratings reflect reliability and unlock higher payouts.
+                Your payout amount is directly tied to your <strong style={{ color: 'white' }}>platform star rating</strong> as reported by your delivery platform (Zomato, Swiggy, Blinkit, etc.). EarnSure retrieves this rating via authorized Platform Partner API integrations. Higher ratings reflect reliability and unlock higher payouts.
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
@@ -180,7 +180,7 @@ const TermsPage = ({ onAccept, onDecline }) => {
               <div style={{ background: 'rgba(6,182,212,0.07)', border: '1px solid rgba(6,182,212,0.15)', borderRadius: '12px', padding: '1rem' }}>
                 <p style={{ color: '#06B6D4', fontWeight: 700, fontSize: '13px', marginBottom: '0.5rem' }}>🏆 How Ratings Work</p>
                 <p style={{ color: '#94A3B8', fontSize: '13px', lineHeight: 1.7 }}>
-                  Your rating is managed entirely by your delivery platform (e.g., Zomato, Swiggy). GigShield reads it via secure API but does not modify it. Maintain high delivery standards, punctuality, and customer satisfaction to unlock premium payout tiers. Ratings are refreshed weekly.
+                  Your rating is managed entirely by your delivery platform (e.g., Zomato, Swiggy). EarnSure reads it via secure API but does not modify it. Maintain high delivery standards, punctuality, and customer satisfaction to unlock premium payout tiers. Ratings are refreshed weekly.
                 </p>
               </div>
             </div>
@@ -190,7 +190,7 @@ const TermsPage = ({ onAccept, onDecline }) => {
             <div>
               <h2 style={{ color: '#EF4444', fontWeight: 800, marginBottom: '0.5rem', fontSize: '1.1rem' }}>Policy Exclusions</h2>
               <p style={{ color: '#94A3B8', lineHeight: 1.8, marginBottom: '1.5rem', fontSize: '14px' }}>
-                The following events and circumstances are <strong style={{ color: '#EF4444' }}>explicitly excluded</strong> from GigShield coverage. Claims related to these will be automatically rejected by the system.
+                The following events and circumstances are <strong style={{ color: '#EF4444' }}>explicitly excluded</strong> from EarnSure coverage. Claims related to these will be automatically rejected by the system.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {EXCLUSIONS.map((excl, i) => (
@@ -220,7 +220,7 @@ const TermsPage = ({ onAccept, onDecline }) => {
               <h2 style={{ color: '#06B6D4', fontWeight: 800, marginBottom: '1rem', fontSize: '1.1rem' }}>Privacy Policy</h2>
               {[
                 { title: 'Location Data', icon: '📍', text: 'We collect continuous GPS coordinates while the app is active. This data is used solely to verify your presence in a disruption zone for payout eligibility. Location data is encrypted and never sold to third parties.' },
-                { title: 'Platform Star Ratings', icon: '⭐', text: 'We retrieve your delivery platform star rating via authorized Partner APIs. This data is read-only — GigShield cannot modify your rating. It is used only to calculate your payout tier.' },
+                { title: 'Platform Star Ratings', icon: '⭐', text: 'We retrieve your delivery platform star rating via authorized Partner APIs. This data is read-only — EarnSure cannot modify your rating. It is used only to calculate your payout tier.' },
                 { title: 'Bank Account Details', icon: '🏦', text: 'Your bank account and IFSC details are stored with AES-256 encryption. They are used exclusively for UPI-based payout disbursement and are never shared with any third party.' },
                 { title: 'Phone Number & OTP', icon: '📱', text: 'Your mobile number is used for identity verification via OTP. It may also be used for critical insurance alerts (severe weather, payout processed). No marketing messages.' },
                 { title: 'Weather & Sensor Data', icon: '🌡️', text: 'We collect real-time weather data from Open-Meteo API, IMD feeds, and IoT sensor networks. This environmental data is used exclusively for trigger verification and is not personally linked to you.' },
@@ -245,7 +245,7 @@ const TermsPage = ({ onAccept, onDecline }) => {
               style={{ marginTop: '3px', accentColor: '#06B6D4', width: '16px', height: '16px', cursor: 'pointer' }}
             />
             <span style={{ color: '#94A3B8', fontSize: '13px', lineHeight: 1.6 }}>
-              I have read and agree to the GigShield <strong style={{ color: 'white' }}>Terms of Service</strong>, understand the{' '}
+              I have read and agree to the EarnSure <strong style={{ color: 'white' }}>Terms of Service</strong>, understand the{' '}
               <strong style={{ color: '#EF4444' }}>Policy Exclusions</strong>, the{' '}
               <strong style={{ color: '#F59E0B' }}>Star Rating payout system</strong>, and consent to the collection of my{' '}
               <strong style={{ color: '#06B6D4' }}>live GPS location</strong> for parametric insurance purposes.
@@ -275,7 +275,7 @@ const TermsPage = ({ onAccept, onDecline }) => {
                 letterSpacing: '0.03em',
               }}
             >
-              {agreed ? '✓ Accept & Enter GigShield' : 'Read all tabs & check the box to proceed'}
+              {agreed ? '✓ Accept & Enter EarnSure' : 'Read all tabs & check the box to proceed'}
             </button>
           </div>
         </div>
@@ -283,7 +283,7 @@ const TermsPage = ({ onAccept, onDecline }) => {
 
       {/* Footer */}
       <p style={{ color: '#1E293B', fontSize: '11px', marginTop: '1.5rem', textAlign: 'center' }}>
-        IRDAI Sandbox License #49281 • GigShield Insurance Services © 2026 • Demo Prototype
+        IRDAI Sandbox License #49281 • EarnSure Insurance Services © 2026 • Demo Prototype
       </p>
     </div>
   );
