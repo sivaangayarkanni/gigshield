@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSimulation } from '../../context/SimulationContext';
 import NationalRiskMap from '../shared/NationalRiskMap';
+import LiveLocationDisplay from '../shared/LiveLocationDisplay';
 import './HomeTab.css';
 
 const HomeTab = () => {
@@ -252,6 +253,8 @@ const HomeTab = () => {
               </span>
             </div>
           </div>
+
+          <LiveLocationDisplay />
 
           <div className="triggers-card">
             <div className="triggers-header">

@@ -264,24 +264,51 @@ export const SimulationProvider = ({ children }) => {
   const fetchRealWeather = async (lat, lon) => {
     try {
       const resp = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation,wind_speed_10m,relative_humidity_2m&wind_speed_unit=kmh`
+        `http://localhost:5000/api/realtime/weather?lat=${lat}&lon=${lon}`
       );
-      if (!resp.ok) throw new Error('Open-Meteo fetch failed');
+      if (!resp.ok) throw new Error('Weather API fetch failed');
       const json = await resp.json();
-      const c = json.current;
-      setSensorData(prev => ({
-        ...prev,
-        temperature: c.temperature_2m ?? prev.temperature,
-        rainfall: c.precipitation ?? prev.rainfall,
-        windSpeed: c.wind_speed_10m ?? prev.windSpeed,
-        humidity: c.relative_humidity_2m ?? prev.humidity,
-        lastUpdated: new Date().toISOString(),
-        multiSource: ['Open-Meteo API', 'IMD', 'IoT Node Grid'],
-      }));
-      setRealWeatherMode(true);
-      addKafkaLog('weather_api', `🌐 Real weather fetched: ${c.temperature_2m}°C, ${c.precipitation}mm rain`, 'success');
+      
+      if (json.success && json.weather) {
+        const w = json.weather;
+        const a = json.aqi;
+        setSensorData(prev => ({
+          ...prev,
+          temperature: w.temperature ?? prev.temperature,
+          rainfall: w.precipitation ?? prev.rainfall,
+          windSpeed: w.windSpeed ?? prev.windSpeed,
+          humidity: w.humidity ?? prev.humidity,
+          visibility: w.visibility ?? prev.visibility,
+          aqi: a.aqi ?? prev.aqi,
+          lastUpdated: new Date().toISOString(),
+          multiSource: ['Open-Meteo API', 'Open-Meteo AQI', 'Real-time Backend'],
+        }));
+        setRealWeatherMode(true);
+        addKafkaLog('weather_api', `🌐 Real weather: ${w.temperature}°C, ${w.precipitation}mm rain, AQI: ${a.aqi}`, 'success');
+      }
     } catch (e) {
-      addKafkaLog('weather_api', `Open-Meteo fallback: ${e.message}`, 'warning');
+      // Fallback to direct Open-Meteo API
+      try {
+        const resp = await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation,wind_speed_10m,relative_humidity_2m&wind_speed_unit=kmh`
+        );
+        if (!resp.ok) throw new Error('Open-Meteo fetch failed');
+        const json = await resp.json();
+        const c = json.current;
+        setSensorData(prev => ({
+          ...prev,
+          temperature: c.temperature_2m ?? prev.temperature,
+          rainfall: c.precipitation ?? prev.rainfall,
+          windSpeed: c.wind_speed_10m ?? prev.windSpeed,
+          humidity: c.relative_humidity_2m ?? prev.humidity,
+          lastUpdated: new Date().toISOString(),
+          multiSource: ['Open-Meteo API Direct', 'IMD', 'IoT Node Grid'],
+        }));
+        setRealWeatherMode(true);
+        addKafkaLog('weather_api', `🌐 Fallback weather: ${c.temperature_2m}°C, ${c.precipitation}mm rain`, 'success');
+      } catch (fallbackErr) {
+        addKafkaLog('weather_api', `Weather API error: ${e.message}`, 'warning');
+      }
     }
   };
 
@@ -296,48 +323,62 @@ export const SimulationProvider = ({ children }) => {
           setLastLocationUpdate(new Date().toISOString()); 
           setGeoError(null); 
 
-          // Real Nominatim reverse geocoding
+          // Real-time geocoding via backend
           try {
             const geoResp = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
-              { headers: { 'Accept-Language': 'en' } }
+              `http://localhost:5000/api/realtime/geocode?lat=${lat}&lon=${lon}`
             );
             const geoJson = await geoResp.json();
-            const city = geoJson.address?.city || geoJson.address?.town || geoJson.address?.state_district || geoJson.address?.state;
-            if (city && city !== activeCity) {
-              // Find best matching city in CITY_COORDS
-              let bestCity = activeCity;
-              let minDist = Infinity;
-              Object.keys(CITY_COORDS).forEach(c => {
-                const d = calculateDistance(lat, lon, CITY_COORDS[c].lat, CITY_COORDS[c].lon);
-                if (d < minDist) { minDist = d; bestCity = c; }
-              });
-              setActiveCity(bestCity);
-              addKafkaLog('location', `📍 Nominatim: ${city} → Mapped to ${bestCity}`, 'success');
+            
+            if (geoJson.success && geoJson.location) {
+              const city = geoJson.location.city;
+              if (city) {
+                setActiveCity(city);
+                addKafkaLog('location', `📍 Location: ${city} (${lat.toFixed(4)}, ${lon.toFixed(4)})`, 'success');
+              }
             }
           } catch(e) {
-            // fallback to distance calculation
-            let minDistance = Infinity;
-            let closestCity = activeCity;
-            Object.keys(CITY_COORDS).forEach(city => {
-               const d = calculateDistance(lat, lon, CITY_COORDS[city].lat, CITY_COORDS[city].lon);
-               if (d < minDistance) { minDistance = d; closestCity = city; }
-            });
-            if (closestCity !== activeCity) setActiveCity(closestCity);
+            // Fallback to direct Nominatim
+            try {
+              const geoResp = await fetch(
+                `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
+                { headers: { 'Accept-Language': 'en', 'User-Agent': 'EarnSure-App/1.0' } }
+              );
+              const geoJson = await geoResp.json();
+              const city = geoJson.address?.city || geoJson.address?.town || geoJson.address?.state_district || geoJson.address?.state;
+              if (city) {
+                setActiveCity(city);
+                addKafkaLog('location', `📍 Fallback geocode: ${city} (${lat.toFixed(4)}, ${lon.toFixed(4)})`, 'success');
+              }
+            } catch(fallbackErr) {
+              addKafkaLog('location', `Geocoding failed, using coordinates: ${lat.toFixed(4)}, ${lon.toFixed(4)}`, 'warning');
+            }
           }
 
           // Fetch real weather for this GPS position
           await fetchRealWeather(lat, lon);
         },
-        (err) => { setGeoError(err.message); }, { enableHighAccuracy: true, timeout: 10000 }
+        (err) => { 
+          setGeoError(err.message); 
+          addKafkaLog('location', `GPS Error: ${err.message}`, 'error');
+        }, 
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
+      
       // Also poll real weather every 30s even without movement
       const weatherInterval = setInterval(() => {
         setRiderCoords(prev => { fetchRealWeather(prev[0], prev[1]); return prev; });
       }, 30000);
-      return () => { navigator.geolocation.clearWatch(watcher); clearInterval(weatherInterval); };
+      
+      return () => { 
+        navigator.geolocation.clearWatch(watcher); 
+        clearInterval(weatherInterval); 
+      };
+    } else {
+      setGeoError('Geolocation not supported');
+      addKafkaLog('location', 'Geolocation not supported by browser', 'error');
     }
-  }, [isAuthenticated, userRole, activeCity, addKafkaLog]);
+  }, [isAuthenticated, userRole, addKafkaLog]);
 
   const loginWithOtp = async (phone, role = 'WORKER') => {
     addKafkaLog('auth', `OTP request for ${phone.slice(-4)}****`, 'info');

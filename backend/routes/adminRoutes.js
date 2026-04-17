@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
-const Policy = require('../models/Policy');
-const Claim = require('../models/Claim');
+const { userOps, policyOps, claimOps } = require('../database/sqlite');
 
 // --- USER CRUD ---
 router.get('/users', async (req, res) => {
   try {
-    const users = await User.find();
+    const users = userOps.getAll();
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -16,8 +14,7 @@ router.get('/users', async (req, res) => {
 
 router.post('/users', async (req, res) => {
   try {
-    const user = new User(req.body);
-    await user.save();
+    const user = userOps.create(req.body);
     res.status(201).json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -26,7 +23,7 @@ router.post('/users', async (req, res) => {
 
 router.put('/users/:id', async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const user = userOps.update(parseInt(req.params.id), req.body);
     res.json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -35,7 +32,7 @@ router.put('/users/:id', async (req, res) => {
 
 router.delete('/users/:id', async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
+    userOps.delete(parseInt(req.params.id));
     res.json({ message: 'User deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -45,7 +42,7 @@ router.delete('/users/:id', async (req, res) => {
 // --- POLICY CRUD ---
 router.get('/policies', async (req, res) => {
   try {
-    const policies = await Policy.find().populate('workerId');
+    const policies = policyOps.getAll();
     res.json(policies);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -54,8 +51,7 @@ router.get('/policies', async (req, res) => {
 
 router.post('/policies', async (req, res) => {
   try {
-    const policy = new Policy(req.body);
-    await policy.save();
+    const policy = policyOps.create(req.body);
     res.status(201).json(policy);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -64,7 +60,7 @@ router.post('/policies', async (req, res) => {
 
 router.put('/policies/:id', async (req, res) => {
   try {
-    const policy = await Policy.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const policy = policyOps.update(parseInt(req.params.id), req.body);
     res.json(policy);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -73,7 +69,7 @@ router.put('/policies/:id', async (req, res) => {
 
 router.delete('/policies/:id', async (req, res) => {
   try {
-    await Policy.findByIdAndDelete(req.params.id);
+    policyOps.delete(parseInt(req.params.id));
     res.json({ message: 'Policy deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -83,7 +79,7 @@ router.delete('/policies/:id', async (req, res) => {
 // --- CLAIM CRUD ---
 router.get('/claims', async (req, res) => {
   try {
-    const claims = await Claim.find().populate('workerId policyId');
+    const claims = claimOps.getAll();
     res.json(claims);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -92,12 +88,15 @@ router.get('/claims', async (req, res) => {
 
 router.put('/claims/:id', async (req, res) => {
   try {
-    const claim = await Claim.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const claim = claimOps.update(parseInt(req.params.id), req.body);
     
     // Notify via socket
     const io = req.app.get('socketio');
-    if (claim.status === 'APPROVED') {
-        io.to(claim.workerId.toString()).emit('claim_approved', { amount: claim.amount, reason: claim.triggerReason });
+    if (claim.status === 'APPROVED' && io) {
+      io.to(claim.worker_id.toString()).emit('claim_approved', { 
+        amount: claim.amount, 
+        reason: claim.trigger_reason 
+      });
     }
 
     res.json(claim);

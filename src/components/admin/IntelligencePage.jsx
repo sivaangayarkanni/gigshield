@@ -23,29 +23,31 @@ const IntelligencePage = () => {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     if (apiKey && apiKey !== 'YOUR_API_KEY_HERE') {
       try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }] })
         });
         const data = await res.json();
         const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Analysis incomplete.';
         setAiMessages(prev => [...prev, { from: 'bot', text: reply }]);
-      } catch { setAiMessages(prev => [...prev, { from: 'bot', text: 'LLM connection failed. Using heuristics...' }]); }
+      } catch(e) { 
+        console.error("Intelligence Portal Connectivity Issue:", e);
+        // -- PREMIUM LOCALIZED RISK PROCESSOR FALLBACK --
+        let localReply = `⚠️ [LOCAL RISK PROCESSOR ACTIVE]: Gemini API unavailable. Falling back to edge actuarial logic. \n\nAnalysis for ${activeCity}: Telemetry indicates `;
+        if (sensorData.aqi > 300) localReply += `SEVERE hazard depth (AQI ${sensorData.aqi}). Recommendation: TRIGGER_PAYOUT_AQI.`;
+        else if (sensorData.rainfall > 40) localReply += `CRITICAL precipitation intensity (${sensorData.rainfall}mm). Recommendation: TRIGGER_PAYOUT_PRECIP.`;
+        else localReply += `STABLE environment. Current metadata does not meet parametric trigger thresholds. Recommendation: MAINTAIN_MONITORING.`;
+        
+        setAiMessages(prev => [...prev, { from: 'bot', text: localReply }]); 
+      }
     } else {
-      // Heuristic fallback
-      let reply = '';
+      // -- PURE HEURISTIC MODE --
+      let reply = `[EDGE NODE]: Based on live telemetry in ${activeCity}, `;
       const lower = userMsg.toLowerCase();
-      if (lower.includes('trigger') || lower.includes('payout')) {
-        if (sensorData.aqi > 300) reply = `✅ RECOMMEND TRIGGER: AQI is critically high at ${sensorData.aqi} in ${activeCity}. This exceeds the ₹500 payout threshold. Initiate AQI_CRITICAL parametric event immediately.`;
-        else if (sensorData.rainfall > 50) reply = `✅ RECOMMEND TRIGGER: Rainfall at ${sensorData.rainfall}mm/hr in ${activeCity} is above the 50mm safety threshold. Trigger HEAVY_RAIN payout for all active workers.`;
-        else if (sensorData.temperature > 42) reply = `✅ RECOMMEND TRIGGER: Temperature at ${sensorData.temperature}°C in ${activeCity} is extreme. Worker safety is compromised. Trigger EXTREME_HEAT payout.`;
-        else reply = `⏸️ NO TRIGGER RECOMMENDED: Current conditions in ${activeCity} are within normal parameters (AQI: ${sensorData.aqi}, Rain: ${sensorData.rainfall}mm, Temp: ${sensorData.temperature}°C). Monitor for escalation.`;
-      } else if (lower.includes('aqi') || lower.includes('air')) {
-        reply = `AQI in ${activeCity} is currently ${sensorData.aqi}. ${sensorData.aqi > 300 ? '🔴 CRITICAL — payout threshold breached.' : sensorData.aqi > 200 ? '🟠 HIGH — approaching trigger threshold.' : '🟢 NORMAL — no action needed.'}`;
-      } else if (lower.includes('rain') || lower.includes('flood')) {
-        reply = `Rainfall in ${activeCity} is ${sensorData.rainfall.toFixed(1)}mm/hr. ${sensorData.rainfall > 50 ? '🔴 HEAVY — trigger recommended.' : sensorData.rainfall > 20 ? '🟠 MODERATE — monitor closely.' : '🟢 LIGHT — no intervention needed.'}`;
-      } else if (lower.includes('analyz') || lower.includes('conditions') || lower.includes('status')) {
-        reply = `${activeCity} Risk Summary: AQI ${sensorData.aqi} (${sensorData.aqi > 300 ? 'CRITICAL' : 'Normal'}), Rain ${sensorData.rainfall.toFixed(1)}mm (${sensorData.rainfall > 50 ? 'HEAVY' : 'Clear'}), Temp ${sensorData.temperature}°C (${sensorData.temperature > 42 ? 'EXTREME' : 'Normal'}). ${realWeatherMode ? '📡 Data sourced from Open-Meteo live feed.' : '🔄 Running on simulated sensor grid.'}`;
+      if (lower.includes('trigger') || lower.includes('payout') || lower.includes('advice') || lower.includes('risk')) {
+        if (sensorData.aqi > 300) reply += `✅ RECOMMENDED ACTION: AQI at ${sensorData.aqi} is hazardous. Initiate automated payout protocol. Total exposure: High.`;
+        else if (sensorData.rainfall > 50) reply += `✅ RECOMMENDED ACTION: Rainfall at ${sensorData.rainfall}mm exceeds safety barrier. Execute parametric release.`;
+        else reply += `⚖️ NO ACTION REQUIRED: Environmental parameters are within the 1:1.5 solvency safety margin.`;
       } else {
         reply = `I am analyzing the telemetry grid for ${activeCity}. Ask me about specific triggers, AQI conditions, rainfall risk, or overall risk status.`;
       }

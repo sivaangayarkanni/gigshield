@@ -35,6 +35,9 @@ const WorkerLayout = () => {
           <NavLink to="/worker/home" className={({isActive}) => isActive ? 'nav-tab active' : 'nav-tab'}>
             🏠 Overview
           </NavLink>
+          <NavLink to="/worker/impact" className={({isActive}) => isActive ? 'nav-tab active' : 'nav-tab'}>
+            📊 Impact Predictor
+          </NavLink>
           <NavLink to="/worker/policy" className={({isActive}) => isActive ? 'nav-tab active' : 'nav-tab'}>
             🛡️ Coverage
           </NavLink>
@@ -83,10 +86,52 @@ const WorkerLayout = () => {
              <Outlet />
           </div>
           <div className="worker-protection-sidebar">
-             <h4 className="sidebar-title">Global Protection</h4>
+             <div className="protection-header">
+               <div className="protection-header-content">
+                 <div className="protection-icon-badge">
+                   <span className="shield-icon">🛡️</span>
+                   <span className="pulse-ring"></span>
+                 </div>
+                 <div className="protection-header-text">
+                   <h4 className="protection-title">Global Protection</h4>
+                   <p className="protection-subtitle">Real-time monitoring active</p>
+                 </div>
+               </div>
+               <div className="protection-status-badge">
+                 <span className="status-indicator"></span>
+                 <span className="status-text">LIVE</span>
+               </div>
+             </div>
+             
+             <div className="protection-stats-grid">
+               <div className="protection-stat-card">
+                 <span className="stat-icon">⚡</span>
+                 <div className="stat-content">
+                   <span className="stat-value">{workerState?.payoutsReceived || 0}</span>
+                   <span className="stat-label">Payouts</span>
+                 </div>
+               </div>
+               <div className="protection-stat-card">
+                 <span className="stat-icon">🌍</span>
+                 <div className="stat-content">
+                   <span className="stat-value">24/7</span>
+                   <span className="stat-label">Coverage</span>
+                 </div>
+               </div>
+             </div>
+
              <WeatherRadar />
+             
              <div style={{ marginTop: '1.5rem' }}>
                 <EarningsForecast />
+             </div>
+
+             <div className="protection-footer-card">
+               <div className="protection-footer-icon">🔒</div>
+               <div className="protection-footer-content">
+                 <h5 className="protection-footer-title">Parametric Insurance</h5>
+                 <p className="protection-footer-text">Instant payouts when triggers activate. No claims, no waiting.</p>
+               </div>
              </div>
           </div>
         </div>

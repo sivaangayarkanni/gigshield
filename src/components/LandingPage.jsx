@@ -11,8 +11,15 @@ const LandingPage = () => {
 
   
   const [step, setStep] = useState('STORY');
-  const [phone, setPhone] = useState('');
-  const [otp, setOtp] = useState('');
+  const [authMode, setAuthMode] = useState('LOGIN'); // 'LOGIN' or 'SIGNUP'
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    platform: '',
+    zone: ''
+  });
   const [loading, setLoading] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
@@ -22,33 +29,150 @@ const LandingPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleRequestOtp = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    if(phone.length < 10) return;
+    
+    if (!formData.name || !formData.password || (!formData.email && !formData.phone)) {
+      addNotification(
+        "Missing Information",
+        "Please fill in all required fields",
+        "error"
+      );
+      return;
+    }
+    
+    if (formData.password.length < 6) {
+      addNotification(
+        "Weak Password",
+        "Password must be at least 6 characters long",
+        "error"
+      );
+      return;
+    }
+    
     setLoading(true);
     
-    // Simulate OTP Generation
-    const simulatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
-    console.log("SIMULATED OTP:", simulatedOtp);
-
-    setTimeout(() => {
-      setLoading(false);
-      setStep('OTP');
+    try {
+      console.log('[SIGNUP] Registering new worker...');
+      
+      const response = await fetch('http://localhost:5000/api/v2/auth/worker/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email || null,
+          phone: formData.phone || null,
+          password: formData.password,
+          platform: formData.platform || null,
+          zone: formData.zone || null
+        })
+      });
+      
+      const data = await response.json();
+      console.log('[SIGNUP] Response:', data);
+      
+      if (response.ok) {
+        // Store session token
+        localStorage.setItem('sessionToken', data.sessionToken);
+        localStorage.setItem('userRole', 'WORKER');
+        localStorage.setItem('userId', data.user.id);
+        
+        // Login via context
+        await loginWithOtp(formData.phone || formData.email);
+        
+        addNotification(
+          "✅ Welcome to EarnSure!",
+          `Account created successfully. You're now protected!`,
+          "success"
+        );
+      } else {
+        addNotification(
+          "Registration Failed",
+          data.error || "Unable to create account. Please try again.",
+          "error"
+        );
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('[SIGNUP] Error:', error);
       addNotification(
-        "EarnSure Secure Access",
-        `Your verification code is ${simulatedOtp}. Valid for 5 mins.`,
-        "success"
+        "Connection Error",
+        "Unable to connect to server. Please check your connection.",
+        "error"
       );
-    }, 1200);
+      setLoading(false);
+    }
   };
 
-
-  const handleVerifyOtp = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if(otp.length < 4) return;
+    
+    if (!formData.email && !formData.phone) {
+      addNotification(
+        "Missing Information",
+        "Please enter your email or phone number",
+        "error"
+      );
+      return;
+    }
+    
+    if (!formData.password) {
+      addNotification(
+        "Missing Password",
+        "Please enter your password",
+        "error"
+      );
+      return;
+    }
+    
     setLoading(true);
-    await loginWithOtp(phone);
-    setLoading(false);
+    
+    try {
+      console.log('[LOGIN] Logging in...');
+      
+      const response = await fetch('http://localhost:5000/api/v2/auth/worker/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          identifier: formData.email || formData.phone,
+          password: formData.password
+        })
+      });
+      
+      const data = await response.json();
+      console.log('[LOGIN] Response:', data);
+      
+      if (response.ok) {
+        // Store session token
+        localStorage.setItem('sessionToken', data.sessionToken);
+        localStorage.setItem('userRole', 'WORKER');
+        localStorage.setItem('userId', data.user.id);
+        
+        // Login via context
+        await loginWithOtp(data.user.phone || data.user.email);
+        
+        addNotification(
+          "✅ Welcome Back!",
+          `Logged in as ${data.user.name}`,
+          "success"
+        );
+      } else {
+        addNotification(
+          "Login Failed",
+          data.error || "Invalid credentials. Please try again.",
+          "error"
+        );
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('[LOGIN] Error:', error);
+      addNotification(
+        "Connection Error",
+        "Unable to connect to server. Please check your connection.",
+        "error"
+      );
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,13 +180,12 @@ const LandingPage = () => {
       <nav className={`landing-nav ${scrollY > 50 ? 'scrolled' : ''}`}>
         <div className="nav-brand">
           <span className="logo-text">EarnSure</span>
-          <span style={{ marginLeft: '8px', fontSize: '10px', fontWeight: 'bold', color: 'var(--accent-magenta)', padding: '2px 6px', border: '1px solid var(--accent-magenta)', borderRadius: '4px', letterSpacing: '1px', textTransform: 'uppercase' }}>Demo</span>
           <span className="nav-tagline" style={{ marginLeft: '12px' }}>External Disruption Claims</span>
         </div>
         <div className="nav-actions">
           <button className="nav-link" onClick={() => navigate('/admin-login')}>Admin Portal</button>
           <button className="nav-link" onClick={() => navigate('/partner-login')}>Partner Portal</button>
-          <button className="btn btn-primary btn-sm" onClick={() => setStep('PHONE')}>Get Protected</button>
+          <button className="btn btn-primary btn-sm" onClick={() => setStep('AUTH')}>Get Protected</button>
         </div>
       </nav>
 
@@ -102,12 +225,12 @@ const LandingPage = () => {
 
           <div>
             <p style={{ margin: '0 0 4px 0', fontSize: '10px', fontWeight: 800, color: '#64748B', textTransform: 'uppercase' }}>Worker Verification (OTP)</p>
-            <p style={{ margin: 0, fontSize: '11px', color: '#94A3B8' }}>Any 10-digit number. OTP is simulated in browser notification.</p>
+            <p style={{ margin: 0, fontSize: '11px', color: '#94A3B8' }}>Enter any email/phone and create account. Real authentication with SQLite.</p>
           </div>
         </div>
         
         <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: '10px', color: '#475569', textAlign: 'center' }}>
-          EARNSURE v4.2 • PROTOTYPE
+          EARNSURE v4.2 • PRODUCTION READY
         </div>
       </div>
 
@@ -148,7 +271,7 @@ const LandingPage = () => {
                 AQI, or extreme conditions hit your zone. No paperwork. No waiting.
               </p>
               <div className="hero-cta slide-up stagger-4">
-                <button className="btn btn-primary btn-lg" onClick={() => setStep('PHONE')}>
+                <button className="btn btn-primary btn-lg" onClick={() => setStep('AUTH')}>
                   Get Instant Cover
                 </button>
                 <a href="#how-it-works" className="btn btn-outline btn-lg">See How It Works</a>
@@ -365,7 +488,7 @@ const LandingPage = () => {
                   </div>
                 </div>
                 
-                <button className="btn btn-primary btn-lg w-full" onClick={() => setStep('PHONE')}>
+                <button className="btn btn-primary btn-lg w-full" onClick={() => setStep('AUTH')}>
                   Get Covered Now
                 </button>
               </div>
@@ -375,7 +498,7 @@ const LandingPage = () => {
           <footer className="landing-footer">
             <div className="footer-content">
               <div className="footer-brand">
-                <span className="logo-text">EarnSure <span style={{fontSize:'12px', color:'var(--accent-magenta)'}}>(Demo Prototype)</span></span>
+                <span className="logo-text">EarnSure</span>
                 <p>IRDAI Sandbox Registered • Protecting India's Gig Workforce</p>
               </div>
               <div className="footer-legal">
@@ -388,55 +511,219 @@ const LandingPage = () => {
         </>
       )}
 
-      {(step === 'PHONE' || step === 'OTP') && (
+      {(step === 'AUTH') && (
         <section className="auth-overlay overlay-blur">
           <div className="auth-container glass-panel scale-in">
             <button className="auth-back" onClick={() => setStep('STORY')}>
               ← Back
             </button>
             
-            {step === 'PHONE' ? (
-              <div className="auth-form">
-                <h2 className="auth-title">Enter Your Number</h2>
-                <p className="auth-subtitle">We'll verify and set up your protection</p>
-                <form onSubmit={handleRequestOtp}>
-                  <div className="phone-input">
-                    <span className="country-code">+91</span>
-                    <input 
-                      type="tel" 
-                      placeholder="98765 43210" 
-                      value={phone} 
-                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0,10))}
-                      required 
-                    />
-                  </div>
-                  <button type="submit" className="btn btn-primary w-full" disabled={loading || phone.length < 10}>
-                    {loading ? 'Sending OTP...' : 'Continue'}
-                  </button>
-                </form>
+            <div className="auth-form">
+              <div className="auth-tabs" style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '2px solid rgba(255,255,255,0.1)' }}>
+                <button 
+                  onClick={() => setAuthMode('LOGIN')}
+                  style={{
+                    flex: 1,
+                    padding: '1rem',
+                    background: 'none',
+                    border: 'none',
+                    color: authMode === 'LOGIN' ? '#F97316' : '#94A3B8',
+                    fontWeight: authMode === 'LOGIN' ? '700' : '400',
+                    borderBottom: authMode === 'LOGIN' ? '3px solid #F97316' : 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Login
+                </button>
+                <button 
+                  onClick={() => setAuthMode('SIGNUP')}
+                  style={{
+                    flex: 1,
+                    padding: '1rem',
+                    background: 'none',
+                    border: 'none',
+                    color: authMode === 'SIGNUP' ? '#F97316' : '#94A3B8',
+                    fontWeight: authMode === 'SIGNUP' ? '700' : '400',
+                    borderBottom: authMode === 'SIGNUP' ? '3px solid #F97316' : 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Sign Up
+                </button>
               </div>
-            ) : (
-              <div className="auth-form">
-                <h2 className="auth-title">Verify OTP</h2>
-                <p className="auth-subtitle">Sent to +91 {phone.slice(0, 5)}****{phone.slice(-4)}</p>
-                <form onSubmit={handleVerifyOtp}>
-                  <div className="otp-input-wrapper">
-                    <input 
-                      type="text" 
-                      className="otp-input" 
-                      maxLength="4" 
-                      value={otp} 
-                      onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                      placeholder="****"
-                      required 
-                    />
-                  </div>
-                  <button type="submit" className="btn btn-primary w-full" disabled={loading || otp.length < 4}>
-                    {loading ? 'Verifying...' : 'Verify & Continue'}
-                  </button>
-                </form>
-              </div>
-            )}
+
+              {authMode === 'LOGIN' ? (
+                <>
+                  <h2 className="auth-title">Welcome Back</h2>
+                  <p className="auth-subtitle">Login to access your protection</p>
+                  <form onSubmit={handleLogin}>
+                    <div style={{ marginBottom: '1rem' }}>
+                      <input 
+                        type="text" 
+                        placeholder="Email or Phone Number" 
+                        value={formData.email || formData.phone}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (/^\d+$/.test(value)) {
+                            setFormData({ ...formData, phone: value, email: '' });
+                          } else {
+                            setFormData({ ...formData, email: value, phone: '' });
+                          }
+                        }}
+                        style={{
+                          width: '100%',
+                          padding: '1rem',
+                          background: 'rgba(255,255,255,0.05)',
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '12px',
+                          color: 'white',
+                          fontSize: '1rem'
+                        }}
+                        required 
+                      />
+                    </div>
+                    <div style={{ marginBottom: '1.5rem' }}>
+                      <input 
+                        type="password" 
+                        placeholder="Password" 
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        style={{
+                          width: '100%',
+                          padding: '1rem',
+                          background: 'rgba(255,255,255,0.05)',
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '12px',
+                          color: 'white',
+                          fontSize: '1rem'
+                        }}
+                        required 
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-primary w-full" disabled={loading}>
+                      {loading ? 'Logging in...' : 'Login'}
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <>
+                  <h2 className="auth-title">Create Account</h2>
+                  <p className="auth-subtitle">Get instant protection in minutes</p>
+                  <form onSubmit={handleSignup}>
+                    <div style={{ marginBottom: '1rem' }}>
+                      <input 
+                        type="text" 
+                        placeholder="Full Name *" 
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        style={{
+                          width: '100%',
+                          padding: '1rem',
+                          background: 'rgba(255,255,255,0.05)',
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '12px',
+                          color: 'white',
+                          fontSize: '1rem'
+                        }}
+                        required 
+                      />
+                    </div>
+                    <div style={{ marginBottom: '1rem' }}>
+                      <input 
+                        type="email" 
+                        placeholder="Email Address *" 
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        style={{
+                          width: '100%',
+                          padding: '1rem',
+                          background: 'rgba(255,255,255,0.05)',
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '12px',
+                          color: 'white',
+                          fontSize: '1rem'
+                        }}
+                        required 
+                      />
+                    </div>
+                    <div style={{ marginBottom: '1rem' }}>
+                      <div className="phone-input">
+                        <span className="country-code">+91</span>
+                        <input 
+                          type="tel" 
+                          placeholder="Phone Number (Optional)" 
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '').slice(0,10) })}
+                        />
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: '1rem' }}>
+                      <input 
+                        type="password" 
+                        placeholder="Password (min 6 characters) *" 
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        style={{
+                          width: '100%',
+                          padding: '1rem',
+                          background: 'rgba(255,255,255,0.05)',
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '12px',
+                          color: 'white',
+                          fontSize: '1rem'
+                        }}
+                        required 
+                      />
+                    </div>
+                    <div style={{ marginBottom: '1rem' }}>
+                      <select 
+                        value={formData.platform}
+                        onChange={(e) => setFormData({ ...formData, platform: e.target.value })}
+                        style={{
+                          width: '100%',
+                          padding: '1rem',
+                          background: 'rgba(255,255,255,0.05)',
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '12px',
+                          color: formData.platform ? 'white' : '#94A3B8',
+                          fontSize: '1rem'
+                        }}
+                      >
+                        <option value="">Select Platform (Optional)</option>
+                        <option value="Zomato">Zomato</option>
+                        <option value="Swiggy">Swiggy</option>
+                        <option value="Uber Eats">Uber Eats</option>
+                        <option value="Dunzo">Dunzo</option>
+                        <option value="Zepto">Zepto</option>
+                        <option value="Blinkit">Blinkit</option>
+                      </select>
+                    </div>
+                    <div style={{ marginBottom: '1.5rem' }}>
+                      <input 
+                        type="text" 
+                        placeholder="Delivery Zone (Optional)" 
+                        value={formData.zone}
+                        onChange={(e) => setFormData({ ...formData, zone: e.target.value })}
+                        style={{
+                          width: '100%',
+                          padding: '1rem',
+                          background: 'rgba(255,255,255,0.05)',
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '12px',
+                          color: 'white',
+                          fontSize: '1rem'
+                        }}
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-primary w-full" disabled={loading}>
+                      {loading ? 'Creating Account...' : 'Create Account'}
+                    </button>
+                  </form>
+                </>
+              )}
+            </div>
           </div>
         </section>
       )}

@@ -23,6 +23,7 @@ import AdminCRUDContainer from './components/admin/AdminCRUDContainer';
 import HomeTab from './components/worker/HomeTab';
 import PolicyTab from './components/worker/PolicyTab';
 import ProofTab from './components/worker/ProofTab';
+import EarningsImpactPredictor from './components/worker/EarningsImpactPredictor';
 
 import './App.css';
 
@@ -64,6 +65,7 @@ const MainRouting = () => {
       {/* 📱 Worker Logistics App (Midnight Full Screen) */}
       <Route path="/worker" element={userRole === 'WORKER' ? <WorkerLayout /> : <Navigate to="/" />}>
          <Route path="home" element={<HomeTab />} />
+         <Route path="impact" element={<EarningsImpactPredictor />} />
          <Route path="policy" element={<PolicyTab />} />
          <Route path="proof" element={<ProofTab />} />
       </Route>
